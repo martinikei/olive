@@ -1,0 +1,23 @@
+all matches pls
+  <a href="/" class="text-pink-500">back</a>
+
+
+<!-- app/views/matches/index.html.erb -->
+<h2>All Matches</h2>
+
+<% if @matches.any? %>
+  <ul>
+    <% @matches.each do |match| %>
+      <li>id:<%= match.id %></li>
+      <li>matcher id:<%= match.user1_id %></li>
+      <li>matchee id:<%= match.user2_id %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No matches available.</p>
+<% end %>
+
+<%= button_to 'Delete All Matches', delete_all_matches_matches_path, method: :delete, class: 'delete-all-matches-button' %>
+
+
+

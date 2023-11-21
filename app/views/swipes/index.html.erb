@@ -1,0 +1,22 @@
+all swipes pls
+  <a href="/" class="text-pink-500">back</a>
+
+
+<!-- app/views/swipes/index.html.erb -->
+<h2>All Swipes</h2>
+
+<% if @swipes.any? %>
+  <ul>
+    <% @swipes.each do |swipe| %>
+      <li>id:<%= swipe.id %></li>
+      <li>swiper id:<%= swipe.swiper_id %></li>
+      <li>swipee id:<%= swipe.swipee_id %></li>
+      <li>liked:<%= swipe.liked %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No swipes available.</p>
+<% end %>
+
+<%= button_to 'Delete All Swipes', delete_all_swipes_swipes_path, method: :delete, class: 'delete-all-swipes-button' %>
+

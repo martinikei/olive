@@ -1,0 +1,120 @@
+<h2>Edit <%= resource_name.to_s.humanize %></h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <%= f.password_field :password, autocomplete: "new-password" %>
+    <% if @minimum_password_length %>
+      <br />
+      <em><%= @minimum_password_length %> characters minimum</em>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+    <%= f.password_field :current_password, autocomplete: "current-password" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Update" %>
+  </div>
+<% end %>
+
+<h3>Cancel my account</h3>
+
+<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+
+<%= link_to "Back", :back %>
+
+
+<form action="<%= profile_path(current_user.profile) %>" method="post" enctype="multipart/form-data">
+  <%= csrf_meta_tags %>
+  <input type="hidden" name="_method" value="patch">
+
+  <!-- Bio -->
+  <label for="bio">Bio</label>
+  <textarea name="profile[bio]"><%= current_user.profile.bio %></textarea>
+
+  <!-- Interests -->
+  <label for="interests">Interests</label>
+  <textarea name="profile[interests]"><%= current_user.profile.interests %></textarea>
+
+  <!-- Denomination -->
+  <label for="denomination">Denomination</label>
+  <input type="text" name="profile[denomination]" value="<%= current_user.profile.denomination %>">
+
+  <!-- Attended Church -->
+  <label for="attended_church">Attended Church</label>
+  <textarea name="profile[attended_church]"><%= current_user.profile.attended_church %></textarea>
+
+  <!-- Gender -->
+  <label for="gender">Gender</label>
+  <input type="text" name="profile[gender]" value="<%= current_user.profile.gender %>">
+
+  <!-- Location -->
+  <label for="location">Location</label>
+  <input type="text" name="profile[location]" value="<%= current_user.profile.location %>">
+
+  <!-- Date of Birth -->
+  <label for="dob">Date of Birth</label>
+  <input type="date" name="profile[dob]" value="<%= current_user.profile.dob %>">
+
+  <!-- Name -->
+  <label for="name">Name</label>
+  <input type="text" name="profile[name]" value="<%= current_user.profile.name %>">
+
+  <!-- Surname -->
+  <label for="surname">Surname</label>
+  <input type="text" name="profile[surname]" value="<%= current_user.profile.surname %>">
+
+  <!-- Hobbies -->
+  <label for="hobbies">Hobbies</label>
+  <input type="text" name="profile[hobbies]" value="<%= current_user.profile.hobbies %>">
+
+  <!-- Work -->
+  <label for="work">Work</label>
+  <input type="text" name="profile[work]" value="<%= current_user.profile.work %>">
+
+  <!-- Testimony -->
+  <label for="testimony">Testimony</label>
+  <input type="text" name="profile[testimony]" value="<%= current_user.profile.testimony %>">
+
+  <!-- Single Image -->
+  <div class="field">
+    <label for="image">Image</label>
+    <input type="file" name="profile[images][]" accept="image/*" multiple>
+  </div>
+
+  <div class="actions">
+    <input type="submit" value="Update Profile">
+  </div>
+</form>
+
+
+<% if current_user.profile.images.attached? %>
+  <h3>Images:</h3>
+  <div class="image-gallery">
+    <% current_user.profile.images.each do |image| %>
+      <%= image_tag image%>
+    <% end %>
+  </div>
+<% else %>
+  <p>No images attached to this profile.</p>
+<% end %>
+
