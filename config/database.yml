@@ -1,0 +1,18 @@
+# config/database.yml
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  username: marcinek
+  password: aaaa0000
+  pool: 5
+  timeout: 5000
+  host: 127.0.0.1
+development:
+  <<: *default
+  database: olivedb
+test:
+  <<: *default
+  database: olivedbtest
+production:
+  <<: *default
+  database: olivedb
