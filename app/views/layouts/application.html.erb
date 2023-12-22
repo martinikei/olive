@@ -1,47 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head >
     <title>Olive</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+<%= action_cable_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <%= render partial: 'partials/header' %>
+
+  <script>
+
+
+    console.log('lmao test');
+
+    document.addEventListener('turbolinks:load', () => {
+      console.log('Turbolinks load event fired');
+    });
+  </script>
   </head>
 
-  <body>
-  <% if notice %>
-    <p class="alert alert-success"><%= notice %></p>
-  <% end %>
-  <% if alert %>
-    <p class="alert alert-danger"><%= alert %></p>
-  <% end %>
+  <body >
+      
 
 
-  <p class="navbar-text float-right">
-   <ul class="navbar-nav mr-auto">
-     <% if user_signed_in? %>
-  <div class="flex items-center space-x-4">
-    <span class="text-gray-700">Logged in as <strong><%= current_user.email %></strong>.</span>
-    <a href="<%= edit_user_registration_path %>" class="text-blue-500 hover:text-blue-700">Edit profile</a>
-    <span class="text-gray-700">|</span>
-    <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "text-red-500 hover:text-red-700" %>
-  </div>
-<% else %>
-  <div class="flex items-center space-x-4">
-    <%= link_to "Sign up", new_user_registration_path, class: "text-green-500 hover:text-green-700" %>
-    <span class="text-gray-700">|</span>
-    <%= link_to "Login", new_user_session_path, class: "text-blue-500 hover:text-blue-700" %>
-  </div>
-<% end %>
-
-       </ul>
-  </p>
-   
 
 
     <%= yield %>
   </body>
+  <%= render partial: 'partials/footer' %>
+
 </html>

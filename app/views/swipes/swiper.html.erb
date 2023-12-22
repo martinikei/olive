@@ -1,40 +1,33 @@
-  <a href="/">back</a>
 
-<% if (!@random_user.nil?) %>
-
-
- <div class="p-3 flex flex-col rounded-xl items-center">
-    <div class="rounded-xl shadow-lg">
-      
-       <% if @random_user.profile.images.attached? %>
-            <%= image_tag @random_user.profile.images.first, class: "rounded-xl w-64 user-image " %>
-      <% else %>
-   <img src="https://www.vermontteddybear.com/dw/image/v2/BDKM_PRD/on/demandware.static/-/Sites-master-catalog-vtb/default/dw0c5c4cde/images/VTB/vtb-23846-18ohsosoftteddybear-lightbrown_feature4_20201012_0843.jpg?sw=600" class="rounded-xl w-64 user-image "       />
-            <% end %>
-      <div class="flex justify-between">
-        <div class="tname text-xl float-left p-4"><%= @random_user.profile.name %> <span class="font-light"><%= calculate_age(@random_user.profile.dob) %> lat
-</span></div>
-      
+  
+  <% if (!@random_user.nil?) %> 
+  
+  <div class="p-3 flex flex-col rounded-xl items-center">
+    <div class="rounded-xl shadow-lg"><% if @random_user.profile.images.attached? %>
+    <%= image_tag @random_user.profile.images.first, class: "rounded-xl w-64 user-image " %>
+    <% else %> <img src="https://www.vermontteddybear.com/dw/image/v2/BDKM_PRD/on/demandware.static/-/Sites-master-catalog-vtb/default/dw0c5c4cde/images/VTB/vtb-23846-18ohsosoftteddybear-lightbrown_feature4_20201012_0843.jpg?sw=600" class="rounded-xl w-64 user-image " />
+    <% end %> <div class="flex justify-between">
+        <div class="tname text-xl float-left p-4">
+        <%= @random_user.profile.name %> 
+        <span class="font-light"><%= calculate_age(@random_user.profile.dob) %> lat </span>
+        </div>
       </div>
-      
       <div class="pl-4 pb-2 text-gray-400">
-        <p>Bio: <%= @random_user.profile.bio %></p>
-        <p>Plec: <%= @random_user.profile.gender %></p>
-        <p>Skad: <%= @random_user.profile.location %></p>
-        <p>Zainteresowania: <%= @random_user.profile.interests %></p>
-        <p>Denominacja: <%= @random_user.profile.denomination %></p>
-        <p>Moj Kosciol: <%= @random_user.profile.attended_church %></p>
-        <p>Praca: <%= @random_user.profile.work %></p>
-        <p>Hobby: <%= @random_user.profile.hobbies %></p>
-        <p>Swiadectwo: <%= @random_user.profile.testimony %></p>
-      </div>
-      
-       <div class="swipe-buttons">
-        <%= button_to 'Like', like_swipe_path(@random_user), method: :post, class: 'like-button' %>
-        <%= button_to 'Dislike', dislike_swipe_path(@random_user), method: :post, class: 'dislike-button' %>
-      </div>
+        <p>Bio: <%= @random_user.profile.bio %> </p>
+        <p>Plec: <%= @random_user.profile.gender %> </p>
+        <p>Skad: <%= @random_user.profile.location %> </p>
+        <p>Zainteresowania: <%= @random_user.profile.interests %> </p>
+        <p>Denominacja: <%= @random_user.profile.denomination %> </p>
+        <p>Moj Kosciol: <%= @random_user.profile.attended_church %> </p>
+        <p>Praca: <%= @random_user.profile.work %> </p>
+        <p>Hobby: <%= @random_user.profile.hobbies %> </p>
+        <p>Swiadectwo: <%= @random_user.profile.testimony %> </p>
+      </div><i class="fas fa-times"></i>
+    <div class="swipe-buttons flex justify-between mt-4">
+      <%= button_to '×'.html_safe, dislike_swipe_path(@random_user), method: :post, class: 'bg-red-200 w-16 h-16 rounded-full text-red-500 m-4 text-3xl dislike-button' %> 
+      <%= button_to '♥'.html_safe, like_swipe_path(@random_user), method: :post, class: 'bg-green-200 w-16 h-16 rounded-full text-green-500 m-4 text-3xl like-button' %>
     </div>
 
-<% else %>
- no more people to show
-<% end %>
+    </div>
+   </div> 
+    <% else %> no more people to show <% end %>

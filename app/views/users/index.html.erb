@@ -1,0 +1,13 @@
+<%= form_for :users, :url => "/users/show",  :html => { :method => 'GET' } do |f| %>
+    I am: <%= f.collection_select :ids, @users, :id, :email %> <br>
+    <%= f.label "Who do you want to chat with?" %> <br>
+    
+    <% @users.each do |user| %>
+        <%= radio_button_tag(:receiver_id, user.id) %>
+        <%= label_tag(:email, user.email) %> <br>
+    <% end %>
+    <%= f.submit "Chat"%>
+<% end %>
+
+<a href="/" data-turbolinks-action="replace">Edit</a>
+

@@ -30,6 +30,11 @@ class SwipesController < ApplicationController
       @swipe = Swipe.new
     end
 
+    def delete_my_swipes
+      Swipe.where(swiper_id: current_user.id)
+      redirect_to '/', notice: 'My swipes deleted!'
+    end
+
     def delete_all_swipes
       Swipe.destroy_all
       redirect_to '/', notice: 'All swipes deleted!'
@@ -104,7 +109,6 @@ class SwipesController < ApplicationController
           if Swipe.exists?(swiper_id: current_user.id, swipee_id: user.id, liked: true)
             # Both users liked each other, create a match
             Match.create(user1_id: current_user.id, user2_id: user.id)
-                  puts "You've got a match with #{user.username}!"
 
           end
         end

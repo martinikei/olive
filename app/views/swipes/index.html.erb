@@ -1,6 +1,3 @@
-all swipes pls
-  <a href="/" class="text-pink-500">back</a>
-
 
 <!-- app/views/swipes/index.html.erb -->
 <h2>All Swipes</h2>
@@ -17,6 +14,8 @@ all swipes pls
 <% else %>
   <p>No swipes available.</p>
 <% end %>
+
+<%= button_to 'Delete My Swipes', delete_my_swipes_swipes_path, method: :delete, class: 'delete-my-swipes-button' %>
 
 <%= button_to 'Delete All Swipes', delete_all_swipes_swipes_path, method: :delete, class: 'delete-all-swipes-button' %>
 

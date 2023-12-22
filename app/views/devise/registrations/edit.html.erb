@@ -1,120 +1,164 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+<div class="flex items-center justify-center p-12">
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+  <div class="mx-auto w-full max-w-[550px]">
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+    <% if current_user.profile.images.attached? %>
+    <div class="image-gallery">
+      <% current_user.profile.images.each do |image| %>
+        <%= image_tag image, class: "w-64 rounded-xl"%>
+      <% end %>
+    </div>
+    <% else %>
+      <p>No images attached to this profile.</p>
+    <% end %>
+
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="mb-5">
+        <%= f.label :email, class: "block text-base font-medium text-green-900 mb-3" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md" %>
+      </div>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div class="mb-5">Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+
+      <div class="mb-5">
+        <%= f.label :password, class: "block text-base font-medium text-green-900 mb-3" %> <i>(leave blank if you don't want to change it)</i>
+        <%= f.password_field :password, autocomplete: "new-password", class: "w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md" %>
+        <% if @minimum_password_length %>
+          <br />
+          <em><%= @minimum_password_length %> characters minimum</em>
+        <% end %>
+      </div>
+
+      <div class="mb-5">
+        <%= f.label :password_confirmation, class: "block text-base font-medium text-green-900 mb-3" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md" %>
+      </div>
+
+      <div class="mb-5">
+        <%= f.label :current_password, class: "block text-base font-medium text-green-900 mb-3" %> <i>(we need your current password to confirm your changes)</i>
+        <%= f.password_field :current_password, autocomplete: "current-password", class: "w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md" %>
+      </div>
+
+      <div>
+        <%= f.submit "Update", class: "hover:shadow-form rounded-md bg-green-600 py-3 px-8 text-base font-semibold text-white outline-none" %>
+      </div>
     <% end %>
   </div>
+</div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+<div class="flex items-center justify-center p-12">
+  <div class="mx-auto w-full max-w-[550px]">
+    <form action="<%= profile_path(current_user.profile) %>" method="post" enctype="multipart/form-data">
+      <%= csrf_meta_tags %>
+      <input type="hidden" name="_method" value="patch">
+
+      <div class="mb-5">
+        <label for="bio" class="block text-base font-medium text-green-900 mb-3">Bio</label>
+        <textarea name="profile[bio]" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md"><%= current_user.profile.bio %></textarea>
+      </div>
+
+      <div class="mb-5">
+        <label for="interests" class="block text-base font-medium text-green-900 mb-3">Interests</label>
+        <textarea name="profile[interests]" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md"><%= current_user.profile.interests %></textarea>
+      </div>
+
+      <div class="mb-5">
+        <label for="denomination" class="block text-base font-medium text-green-900 mb-3">Denomination</label>
+        <input type="text" name="profile[denomination]" value="<%= current_user.profile.denomination %>" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md">
+      </div>
+
+      <div class="mb-5">
+        <label for="attended_church" class="block text-base font-medium text-green-900 mb-3">Attended Church</label>
+        <textarea name="profile[attended_church]" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md"><%= current_user.profile.attended_church %></textarea>
+      </div>
+
+     <div class="mb-5">
+        <label for="gender" class="block text-base font-medium text-green-900 mb-3">Plec</label>
+        <select name="profile[gender]" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md">
+          <option value="male" <%= current_user.profile.gender == 'male' ? 'selected' : '' %>>Mezczyzna</option>
+          <option value="female" <%= current_user.profile.gender == 'female' ? 'selected' : '' %>>Kobieta</option>
+        </select>
+      </div>
+
+
+      <div class="mb-5">
+        <label for="location" class="block text-base font-medium text-green-900 mb-3">Location</label>
+        <input type="text" name="profile[location]" value="<%= current_user.profile.location %>" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md">
+      </div>
+
+      <div class="mb-5">
+        <label for="dob" class="block text-base font-medium text-green-900 mb-3">Date of Birth</label>
+        <input type="date" name="profile[dob]" value="<%= current_user.profile.dob %>" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md">
+      </div>
+
+      <div class="mb-5">
+        <label for="name" class="block text-base font-medium text-green-900 mb-3">Name</label>
+        <input type="text" name="profile[name]" value="<%= current_user.profile.name %>" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md">
+      </div>
+
+      <div class="mb-5">
+        <label for="surname" class="block text-base font-medium text-green-900 mb-3">Surname</label>
+        <input type="text" name="profile[surname]" value="<%= current_user.profile.surname %>" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md">
+      </div>
+
+      <div class="mb-5">
+        <label for="hobbies" class="block text-base font-medium text-green-900 mb-3">Hobbies</label>
+        <input type="text" name="profile[hobbies]" value="<%= current_user.profile.hobbies %>" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md">
+      </div>
+
+      <div class="mb-5">
+        <label for="work" class="block text-base font-medium text-green-900 mb-3">Work</label>
+        <input type="text" name="profile[work]" value="<%= current_user.profile.work %>" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md">
+      </div>
+
+      <div class="mb-5">
+        <label for="testimony" class="block text-base font-medium text-green-900 mb-3">Testimony</label>
+        <input type="text" name="profile[testimony]" value="<%= current_user.profile.testimony %>" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md">
+      </div>
+
+      <div class="field mb-5">
+        <label for="image" class="block text-base font-medium text-green-900 mb-3">Image</label>
+        <input type="file" onchange="limitFiles(this, 3)" name="profile[images][]" accept="image/*" multiple class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-green-600 focus:shadow-md">
+      </div>
+
+      <div class="actions">
+        <input type="submit" value="Update Profile" class="hover:shadow-form rounded-md bg-green-600 py-3 px-8 text-base font-semibold text-white outline-none">
+      </div>
+    </form>
   </div>
+</div>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
+
+
+<div class="flex items-center justify-center p-12">
+  <div class="mx-auto w-full max-w-[550px]">
+    <h3 class="text-2xl font-semibold mb-6">Cancel my account</h3>
+
+    <div class="mb-8">
+      <p class="text-base text-[#6B7280] mb-4">Unhappy?</p>
+      <%= button_to "Delete my account", registration_path(resource_name),
+                    data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" },
+                    method: :delete,
+                    class: "bg-red-500 hover:bg-red-600 text-white py-3 px-8 rounded-md" %>
+    </div>
   </div>
+</div>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
+<script>
+  function limitFiles(input, maxFiles) {
+    const files = input.files;
 
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
-
-
-<form action="<%= profile_path(current_user.profile) %>" method="post" enctype="multipart/form-data">
-  <%= csrf_meta_tags %>
-  <input type="hidden" name="_method" value="patch">
-
-  <!-- Bio -->
-  <label for="bio">Bio</label>
-  <textarea name="profile[bio]"><%= current_user.profile.bio %></textarea>
-
-  <!-- Interests -->
-  <label for="interests">Interests</label>
-  <textarea name="profile[interests]"><%= current_user.profile.interests %></textarea>
-
-  <!-- Denomination -->
-  <label for="denomination">Denomination</label>
-  <input type="text" name="profile[denomination]" value="<%= current_user.profile.denomination %>">
-
-  <!-- Attended Church -->
-  <label for="attended_church">Attended Church</label>
-  <textarea name="profile[attended_church]"><%= current_user.profile.attended_church %></textarea>
-
-  <!-- Gender -->
-  <label for="gender">Gender</label>
-  <input type="text" name="profile[gender]" value="<%= current_user.profile.gender %>">
-
-  <!-- Location -->
-  <label for="location">Location</label>
-  <input type="text" name="profile[location]" value="<%= current_user.profile.location %>">
-
-  <!-- Date of Birth -->
-  <label for="dob">Date of Birth</label>
-  <input type="date" name="profile[dob]" value="<%= current_user.profile.dob %>">
-
-  <!-- Name -->
-  <label for="name">Name</label>
-  <input type="text" name="profile[name]" value="<%= current_user.profile.name %>">
-
-  <!-- Surname -->
-  <label for="surname">Surname</label>
-  <input type="text" name="profile[surname]" value="<%= current_user.profile.surname %>">
-
-  <!-- Hobbies -->
-  <label for="hobbies">Hobbies</label>
-  <input type="text" name="profile[hobbies]" value="<%= current_user.profile.hobbies %>">
-
-  <!-- Work -->
-  <label for="work">Work</label>
-  <input type="text" name="profile[work]" value="<%= current_user.profile.work %>">
-
-  <!-- Testimony -->
-  <label for="testimony">Testimony</label>
-  <input type="text" name="profile[testimony]" value="<%= current_user.profile.testimony %>">
-
-  <!-- Single Image -->
-  <div class="field">
-    <label for="image">Image</label>
-    <input type="file" name="profile[images][]" accept="image/*" multiple>
-  </div>
-
-  <div class="actions">
-    <input type="submit" value="Update Profile">
-  </div>
-</form>
-
-
-<% if current_user.profile.images.attached? %>
-  <h3>Images:</h3>
-  <div class="image-gallery">
-    <% current_user.profile.images.each do |image| %>
-      <%= image_tag image%>
-    <% end %>
-  </div>
-<% else %>
-  <p>No images attached to this profile.</p>
-<% end %>
+    if (files.length > maxFiles) {
+      alert(`Please select up to ${maxFiles} files.`);
+      input.value = ''; // Clear the selected files
+    }
+  }
+</script>
 

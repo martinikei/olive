@@ -1,0 +1,37 @@
+<!-- component -->
+<nav class="bg-green-50 shadow dark:bg-gray-800">
+  <div class="container flex items-center justify-center p-6 mx-auto text-gray-600 capitalize dark:text-gray-300">
+    <a href="/" class="text-gray-800 dark:text-gray-200 border-b-2 border-green-500 mx-1.5 sm:mx-6">Strona Glowna</a><% if user_signed_in? %> <a href="/swipes" class="border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-green-500 mx-1.5 sm:mx-6">Moje Polubienia</a>
+    <a href="/matches" class="border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-green-500 mx-1.5 sm:mx-6">Pary</a>
+    <a href="/swipe" class="border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-green-500 mx-1.5 sm:mx-6">Poznawaj</a>
+    <a href="<%= edit_user_registration_path %>" class="border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-green-500 mx-1.5 sm:mx-6">Profil </a>
+    <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-green-500 mx-1.5 sm:mx-6" %>
+    <% else %> 
+    <a href="/users/sign_up" class="border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-green-500 mx-1.5 sm:mx-6">Zarejestruj</a>
+    <a href="/users/sign_in" class="border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-green-500 mx-1.5 sm:mx-6">Zaloguj</a>
+    <% end %>
+  </div><% if notice %> <div class="fade-out flex text-red-500 justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-100 my-3">
+    <div>
+      <span class=" font-mono align-middle"><%= notice %> </span>
+    </div>
+  </div><% end %><% if alert %> <div class=" fade-out flex text-red-500 justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-100 my-3">
+    <div>
+      <span class=" font-mono align-middle"><%= alert %> </span>
+    </div>
+  </div><% end %>
+</nav>
+<style>
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .fade-out {
+    animation: fadeOut 3s ease-in-out forwards;
+  }
+</style>

@@ -1,21 +1,33 @@
-all matches pls
-  <a href="/" class="text-pink-500">back</a>
 
-
-<!-- app/views/matches/index.html.erb -->
-<h2>All Matches</h2>
-
-<% if @matches.any? %>
+<% if @matched_users.any? %>
   <ul>
-    <% @matches.each do |match| %>
-      <li>id:<%= match.id %></li>
-      <li>matcher id:<%= match.user1_id %></li>
-      <li>matchee id:<%= match.user2_id %></li>
-    <% end %>
+    Moje pary: <%= current_user.matched_users.count %>
   </ul>
+
+  <div class="container mx-auto">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+   <% @matched_users.each do |matched_user| %>
+
+      <div class="flex justify-center flex-col rounded-lg text-1xl p-6 bg-gray-100">
+        <% if matched_user.profile.images.any? %>
+          <%= image_tag matched_user.profile.images.first, class: "rounded-xl w-64 user-image " %>
+        <% end %>
+        <%= matched_user.profile.name %>, <%= matched_user.profile.bio %>
+      </div>
+       <% end %>
+  </div>
+</div>
+
+
+
 <% else %>
   <p>No matches available.</p>
 <% end %>
+
+
+
+
+<%= button_to 'Delete My Matches', delete_my_matches_matches_path, method: :delete, class: 'delete-my-matches-button' %>
 
 <%= button_to 'Delete All Matches', delete_all_matches_matches_path, method: :delete, class: 'delete-all-matches-button' %>
 
